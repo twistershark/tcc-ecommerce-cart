@@ -1,12 +1,16 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: [
-		'./src/**/*.tsx',
-	],
-	theme: {
-		extend: {},
-	},
-	variants: {
-		extend: {},
-	},
-	plugins: [],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  prefix: "ca-",
+  theme: {
+    extend: {
+      fontFamily: {
+        nunito: ["Nunito", "sans-serif"],
+      },
+    },
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [require("@tailwindcss/aspect-ratio")],
 };

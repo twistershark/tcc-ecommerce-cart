@@ -44,7 +44,10 @@ module.exports = (_, argv) => ({
       name: "cart",
       filename: "remoteEntry.js",
       remotes: {},
-      exposes: {},
+      exposes: {
+        "./Cart": "./src/components/Cart",
+        "./useCart": "./src/store/cart",
+      },
       shared: {
         ...deps,
         react: {
@@ -54,6 +57,9 @@ module.exports = (_, argv) => ({
         "react-dom": {
           singleton: true,
           requiredVersion: deps["react-dom"],
+        },
+        jotai: {
+          requiredVersion: deps["jotai"],
         },
       },
     }),

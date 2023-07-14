@@ -1,14 +1,15 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 
-import "./index.scss";
+import Cart from "./components/Cart";
+import "./index.css";
 
 const App = () => (
-  <div className="mt-10 text-3xl mx-auto max-w-6xl">
-    <div>Name: cart</div>
-    <div>Framework: react</div>
-    <div>Language: TypeScript</div>
-    <div>CSS: Tailwind</div>
-  </div>
+  <BrowserRouter>
+    <Cart />
+  </BrowserRouter>
 );
-ReactDOM.render(<App />, document.getElementById("app"));
+
+const root = createRoot(document.getElementById("app")!);
+root.render(<App />);
