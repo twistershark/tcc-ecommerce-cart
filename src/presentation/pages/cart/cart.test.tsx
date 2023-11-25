@@ -40,11 +40,13 @@ describe("Cart", () => {
   });
 
   it("should render Cart page with empty cart", async () => {
-    render(
-      <MemoryRouter>
-        <Cart />
-      </MemoryRouter>
-    );
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <Cart />
+        </MemoryRouter>
+      );
+    });
 
     expect(
       screen.getByText(/Nenhum produto adicionado ao carrinho!/i)
@@ -63,11 +65,13 @@ describe("Cart", () => {
         .default.mockReturnValue([productsMock, jest.fn()]);
     });
 
-    render(
-      <MemoryRouter>
-        <Cart />
-      </MemoryRouter>
-    );
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <Cart />
+        </MemoryRouter>
+      );
+    });
 
     productsMock.forEach((product) => {
       expect(screen.getByText(product.name)).toBeInTheDocument();
@@ -86,11 +90,13 @@ describe("Cart", () => {
         .default.mockReturnValue([productsMock, jest.fn()]);
     });
 
-    render(
-      <MemoryRouter>
-        <Cart />
-      </MemoryRouter>
-    );
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <Cart />
+        </MemoryRouter>
+      );
+    });
 
     const incrementButton = screen.getByTestId(
       `increment-button-${productsMock[0].productId}`
@@ -120,5 +126,142 @@ describe("Cart", () => {
       },
       0
     );
+  });
+
+  it("should handle clear cart correctly", async () => {
+    const productsMock = createRandomProducts(1);
+    const setCartMock = jest.fn();
+    jest
+      .spyOn(productsController, "getProductsSuggestions")
+      .mockResolvedValue([]);
+
+    act(() => {
+      jest
+        .requireMock("../../store/cart")
+        .default.mockReturnValue([productsMock, setCartMock]);
+    });
+
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <Cart />
+        </MemoryRouter>
+      );
+    });
+
+    await userEvent.click(screen.getByText("Limpar carrinho"));
+
+    expect(setCartMock).toHaveBeenCalledWith([]);
+  });
+
+  it("should handle remove product from cart correctly", async () => {
+    const productsMock = createRandomProducts(1);
+    const setCartMock = jest.fn();
+    jest
+      .spyOn(productsController, "getProductsSuggestions")
+      .mockResolvedValue([]);
+
+    act(() => {
+      jest
+        .requireMock("../../store/cart")
+        .default.mockReturnValue([productsMock, setCartMock]);
+    });
+
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <Cart />
+        </MemoryRouter>
+      );
+    });
+
+    await userEvent.click(
+      screen.getByTestId(`remove-button-${productsMock[0].productId}`)
+    );
+
+    expect(cartController.removeProductFromCart).toHaveBeenCalledWith({
+      product: productsMock[0],
+      cart: productsMock,
+      setCart: setCartMock,
+    });
+  });
+
+  it("should handle add product to cart correctly", async () => {
+    const productsMock = createRandomProducts(4);
+    jest
+      .spyOn(productsController, "getProductsSuggestions")
+      .mockResolvedValue(productsMock);
+
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <Cart />
+        </MemoryRouter>
+      );
+    });
+
+    const productSuggestions = screen.getAllByText("Adicionar ao carrinho");
+
+    await userEvent.click(productSuggestions[0]);
+
+    expect(cartController.addProductToCart).toHaveBeenCalled();
+  });
+
+  it("should render products suggestions", async () => {
+    const productsMock = createRandomProducts(4);
+    jest
+      .spyOn(productsController, "getProductsSuggestions")
+      .mockResolvedValue(productsMock);
+
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <Cart />
+        </MemoryRouter>
+      );
+    });
+
+    const addToCartSuggestionButtons = screen.getAllByText(
+      "Adicionar ao carrinho"
+    );
+
+    addToCartSuggestionButtons.forEach((suggestion) =>
+      expect(suggestion).toBeInTheDocument()
+    );
+
+    productsMock.forEach((product) =>
+      expect(screen.getByText(product.name)).toBeInTheDocument()
+    );
+  });
+
+  it("should render products suggestions without add to cart button", async () => {
+    const productsMock = createRandomProducts(4);
+    const setCartMock = jest.fn();
+
+    jest
+      .spyOn(productsController, "getProductsSuggestions")
+      .mockResolvedValue(productsMock);
+
+    await act(async () => {
+      jest
+        .requireMock("../../store/cart")
+        .default.mockReturnValue([productsMock, setCartMock]);
+    });
+
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <Cart />
+        </MemoryRouter>
+      );
+    });
+
+    const addToCartSuggestionButtons = screen.queryAllByText(
+      "Adicionar ao carrinho"
+    );
+
+    console.log(addToCartSuggestionButtons);
+
+    expect(addToCartSuggestionButtons).toHaveLength(0);
   });
 });
