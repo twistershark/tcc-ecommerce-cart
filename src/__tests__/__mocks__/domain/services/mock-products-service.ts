@@ -1,4 +1,4 @@
-import { Category, Product } from "../../../../domain/entities/product";
+import { Product } from "../../../../domain/entities/product";
 import { ProductsServiceInterface } from "../../../../domain/services/products-service-interface";
 import { MockProductRepository } from "../../infrastructure/repositories/mock-products-repository";
 
