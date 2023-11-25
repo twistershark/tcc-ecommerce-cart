@@ -20,55 +20,39 @@ export function Cart() {
   }, 0);
 
   function handleAddProductQuantity(product: ProductInCart) {
-    try {
-      const params = {
-        product,
-        cart,
-        setCart,
-      };
-      cartController.updateProductInCartQuantity(params, product.quantity + 1);
-    } catch (err) {
-      console.error(err);
-    }
+    const params = {
+      product,
+      cart,
+      setCart,
+    };
+    cartController.updateProductInCartQuantity(params, product.quantity + 1);
   }
 
   function handleSubtractProductQuantity(product: ProductInCart) {
-    try {
-      const params = {
-        product,
-        cart,
-        setCart,
-      };
-      cartController.updateProductInCartQuantity(params, product.quantity - 1);
-    } catch (err) {
-      console.error(err);
-    }
+    const params = {
+      product,
+      cart,
+      setCart,
+    };
+    cartController.updateProductInCartQuantity(params, product.quantity - 1);
   }
 
   function handleAddProductToCart(product: Product) {
-    try {
-      const params = {
-        product: { ...product, quantity: 1 },
-        cart,
-        setCart,
-      };
-      cartController.addProductToCart(params);
-    } catch (err) {
-      console.error(err);
-    }
+    const params = {
+      product: { ...product, quantity: 1 },
+      cart,
+      setCart,
+    };
+    cartController.addProductToCart(params);
   }
 
   function handleRemoveProductFromCart(product: ProductInCart) {
-    try {
-      const params = {
-        product,
-        cart,
-        setCart,
-      };
-      cartController.removeProductFromCart(params);
-    } catch (err) {
-      console.error(err);
-    }
+    const params = {
+      product,
+      cart,
+      setCart,
+    };
+    cartController.removeProductFromCart(params);
   }
 
   function handleClearCart() {
@@ -145,6 +129,7 @@ export function Cart() {
                 <button
                   onClick={() => handleRemoveProductFromCart(product)}
                   className="ca-flex ca-items-center ca-justify-center"
+                  data-testid={`remove-button-${product.productId}`}
                 >
                   <TrashIcon />
                 </button>
