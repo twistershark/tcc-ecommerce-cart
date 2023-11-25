@@ -1,4 +1,4 @@
-import { Category, Product } from "../entities/product";
+import { Product } from "../entities/product";
 
 export interface ProductsRepositoryInterface {
   getProductsSuggestions(): Promise<Product[]>;
