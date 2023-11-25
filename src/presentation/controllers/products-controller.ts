@@ -6,7 +6,7 @@ import { ProductsAdapter } from "../../infrastructure/adapters/products-adapter"
 import { HttpClient } from "../../infrastructure/clients/http-client";
 import { ProductsRepository } from "../../infrastructure/repositories/products-repository";
 
-export class CartController implements ProductsControllerInterface {
+export class ProductsController implements ProductsControllerInterface {
   private productsService: ProductsServiceInterface;
 
   constructor(productsService?: ProductsServiceInterface) {
@@ -23,4 +23,4 @@ export class CartController implements ProductsControllerInterface {
   }
 }
 
-export default new CartController();
+export default new ProductsController();
