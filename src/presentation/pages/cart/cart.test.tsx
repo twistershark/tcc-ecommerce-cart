@@ -260,8 +260,6 @@ describe("Cart", () => {
       "Adicionar ao carrinho"
     );
 
-    console.log(addToCartSuggestionButtons);
-
     expect(addToCartSuggestionButtons).toHaveLength(0);
   });
 });
