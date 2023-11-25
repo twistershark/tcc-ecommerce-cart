@@ -6,8 +6,8 @@ import { UpdateCartDTO } from "../dtos/update-cart-dto";
 export class CartController implements CartControllerInterface {
   private cartService: CartServiceInterface;
 
-  constructor(productsService?: CartServiceInterface) {
-    this.cartService = productsService ?? new CartService();
+  constructor(cartService?: CartServiceInterface) {
+    this.cartService = cartService ?? new CartService();
   }
   addProductToCart(params: UpdateCartDTO): void {
     this.cartService.addProductToCart(params);
