@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useCart from "../../store/cart";
 import { formatCurrency } from "../../../utils/formatCurrency";
 import cartController from "../../controllers/cart-controller";
@@ -6,20 +6,14 @@ import { Product, ProductInCart } from "../../../domain/entities/product";
 import { TrashIcon } from "../../assets/svgs/trash-icon";
 import { Link } from "react-router-dom";
 import { ChevronLeftIcon } from "../../assets/svgs/chevron-left-icon";
-import { PRODUCTS } from "../../../constants/products";
 import { ProductSuggestion } from "../../components/product-suggestion";
+import productsController from "../../controllers/products-controller";
 
 const TAX = 5.99;
 
 export function Cart() {
   const [cart, setCart] = useCart();
-
-  const productsSuggestion = [
-    PRODUCTS[0],
-    PRODUCTS[1],
-    PRODUCTS[2],
-    PRODUCTS[3],
-  ];
+  const [productsSuggestions, setProductsSuggestions] = useState<Product[]>([]);
 
   const totalPrice = cart.reduce((acc, product) => {
     return acc + product.quantity * product.price;
@@ -81,6 +75,15 @@ export function Cart() {
     setCart([]);
   }
 
+  async function handleLoadSuggestions() {
+    const suggestions = await productsController.getProductsSuggestions();
+    setProductsSuggestions(suggestions);
+  }
+
+  useEffect(() => {
+    handleLoadSuggestions();
+  }, []);
+
   return (
     <div className="ca-w-full ca-mx-auto ca-max-w-2xl sm:ca-px-6 sm:ca-py-24 lg:ca-max-w-7xl lg:ca-px-8 lg:ca-py-8 ca-flex ca-flex-col ca-gap-8">
       <h1 className="ca-text-[#555] ca-text-2xl ca-font-normal ca-font-serif ca-my-4">
@@ -88,7 +91,7 @@ export function Cart() {
       </h1>
       <div className="ca-flex ca-gap-4">
         <div className="ca-w-full">
-          <div className="ca-grid ca-grid-cols-[100px_2fr_1fr_1fr_100px] ca-items-center ca-border-b-[1px] ca-py-2 ca-bg-[#D9D9D9] ca-py-4">
+          <div className="ca-grid ca-grid-cols-[100px_2fr_1fr_1fr_100px] ca-items-center ca-border-b-[1px] ca-bg-[#D9D9D9] ca-py-4">
             <div />
             <strong className="ca-font-serif">Produto</strong>
             <strong className="ca-font-serif">Quantidade</strong>
@@ -205,7 +208,7 @@ export function Cart() {
           Talvez você goste
         </h3>
         <div className="ca-mt-6 ca-grid ca-grid-cols-1 ca-gap-x-6 ca-gap-y-10 sm:ca-grid-cols-2 lg:ca-grid-cols-4 xl:ca-gap-x-8">
-          {productsSuggestion.map((product) => (
+          {productsSuggestions.map((product) => (
             <ProductSuggestion
               key={product.id}
               product={product}
