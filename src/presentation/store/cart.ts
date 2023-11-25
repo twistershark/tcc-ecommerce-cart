@@ -1,9 +1,5 @@
 import { atom, useAtom } from "jotai";
-import { Product } from "../components/Cart/types";
-
-export type ProductInCart = Product & {
-  quantity: number;
-};
+import { ProductInCart } from "../../domain/entities/product";
 
 const cartAtom = atom([] as ProductInCart[]);
 
