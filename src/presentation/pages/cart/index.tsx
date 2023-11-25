@@ -122,7 +122,7 @@ export function Cart() {
                   <button
                     onClick={() => handleSubtractProductQuantity(product)}
                     className="ca-flex ca-items-center ca-justify-center ca-px-[1rem] ca-py-[.5rem] ca-border ca-border-black"
-                    data-testid="decrement-button"
+                    data-testid={`decrement-button-${product.productId}`}
                   >
                     -
                   </button>
@@ -132,7 +132,7 @@ export function Cart() {
                   <button
                     onClick={() => handleAddProductQuantity(product)}
                     className="ca-flex ca-items-center ca-justify-center ca-px-[1rem] ca-py-[.5rem] ca-border ca-border-black"
-                    data-testid="increment-button"
+                    data-testid={`increment-button-${product.productId}`}
                   >
                     +
                   </button>
