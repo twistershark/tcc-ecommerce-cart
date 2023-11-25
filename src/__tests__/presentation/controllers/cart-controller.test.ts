@@ -3,7 +3,7 @@ import { CartController } from "../../../presentation/controllers/cart-controlle
 import { createRandomProduct } from "../../__mocks__/domain/entities/mock-product";
 
 describe("CartController", () => {
-  const productsController = new CartController();
+  const cartController = new CartController();
 
   it("should be able to add product to cart", async () => {
     const product = createRandomProduct();
@@ -14,7 +14,7 @@ describe("CartController", () => {
 
     const params = { product, cart, setCart };
 
-    productsController.addProductToCart(params);
+    cartController.addProductToCart(params);
 
     expect(cart).toHaveLength(1);
     expect(cart).toEqual([product]);
@@ -28,7 +28,7 @@ describe("CartController", () => {
     const params = { product, cart, setCart };
 
     expect(() => {
-      productsController.addProductToCart(params);
+      cartController.addProductToCart(params);
     }).toThrow(
       "Product is already in the cart! Remove the product before trying to add it"
     );
@@ -44,7 +44,7 @@ describe("CartController", () => {
     const params = { product, cart, setCart };
     const newQuantity = 3;
 
-    productsController.updateProductInCartQuantity(params, newQuantity);
+    cartController.updateProductInCartQuantity(params, newQuantity);
 
     expect(cart[0].quantity).toEqual(newQuantity);
   });
@@ -59,7 +59,7 @@ describe("CartController", () => {
     const params = { product, cart, setCart };
     const newQuantity = 4;
 
-    productsController.updateProductInCartQuantity(params, newQuantity);
+    cartController.updateProductInCartQuantity(params, newQuantity);
 
     expect(cart[0].quantity).toEqual(newQuantity);
   });
@@ -74,7 +74,7 @@ describe("CartController", () => {
     const params = { product, cart, setCart };
     const newQuantity = 0;
 
-    productsController.updateProductInCartQuantity(params, newQuantity);
+    cartController.updateProductInCartQuantity(params, newQuantity);
 
     expect(cart).toHaveLength(0);
     expect(cart).toEqual([]);
@@ -89,7 +89,7 @@ describe("CartController", () => {
 
     const params = { product, cart, setCart };
 
-    productsController.removeProductFromCart(params);
+    cartController.removeProductFromCart(params);
 
     expect(cart).toHaveLength(0);
     expect(cart).toEqual([]);
@@ -105,7 +105,7 @@ describe("CartController", () => {
     const params = { product, cart, setCart };
 
     expect(() => {
-      productsController.removeProductFromCart(params);
+      cartController.removeProductFromCart(params);
     }).toThrow("Product is not in cart!");
   });
 });
