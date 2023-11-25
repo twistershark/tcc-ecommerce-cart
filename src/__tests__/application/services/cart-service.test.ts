@@ -53,6 +53,21 @@ describe("CartService", () => {
     expect(cart[0].quantity).toEqual(newQuantity);
   });
 
+  it("should be able to update product quantity when newQuantity is greater than or equal to 1", async () => {
+    const product = createRandomProduct();
+    let cart: ProductInCart[] = [{ ...product, quantity: 5 }];
+    const setCart = (newCart: ProductInCart[]) => {
+      cart = newCart;
+    };
+
+    const params = { product, cart, setCart };
+    const newQuantity = 7;
+
+    cartService.updateProductInCartQuantity(params, newQuantity);
+
+    expect(cart[0].quantity).toEqual(newQuantity);
+  });
+
   it("should not be able to change the quantity of a product that is not in cart", async () => {
     const product = createRandomProduct();
     let cart: ProductInCart[] = [];
