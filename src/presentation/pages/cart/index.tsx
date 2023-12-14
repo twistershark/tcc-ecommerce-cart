@@ -11,7 +11,7 @@ import productsController from "../../controllers/products-controller";
 
 const TAX = 5.99;
 
-export function Cart() {
+export default function Cart() {
   const [cart, setCart] = useCart();
   const [productsSuggestions, setProductsSuggestions] = useState<Product[]>([]);
 
