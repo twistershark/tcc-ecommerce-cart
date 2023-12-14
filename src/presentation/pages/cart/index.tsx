@@ -17,6 +17,7 @@ export default function Cart() {
   const navigate = useNavigate();
   const [cart, setCart] = useCart();
   const [productsSuggestions, setProductsSuggestions] = useState<Product[]>([]);
+  const isCartEmpty = cart && cart.length === 0;
 
   const totalPrice = cart.reduce((acc, product) => {
     return acc + product.quantity * product.price;
@@ -185,8 +186,9 @@ export default function Cart() {
                 Total com taxa: {formatCurrency(totalPrice + TAX)}
               </strong>
               <button
-                className="ca-text-white ca-bg-black ca-px-4 ca-py-2 ca-w-full"
+                className="ca-text-white ca-bg-black disabled:ca-bg-[#c6c6c6] disabled:ca-cursor-not-allowed ca-px-4 ca-py-2 ca-w-full"
                 onClick={() => navigate("/pagamento")}
+                disabled={isCartEmpty}
               >
                 Ir para pagamento
               </button>
