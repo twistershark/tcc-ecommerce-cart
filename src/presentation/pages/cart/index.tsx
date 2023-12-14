@@ -4,7 +4,7 @@ import { formatCurrency } from "../../../utils/formatCurrency";
 import cartController from "../../controllers/cart-controller";
 import { Product, ProductInCart } from "../../../domain/entities/product";
 import { TrashIcon } from "../../assets/svgs/trash-icon";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ChevronLeftIcon } from "../../assets/svgs/chevron-left-icon";
 import { ProductSuggestion } from "../../components/product-suggestion";
 import productsController from "../../controllers/products-controller";
@@ -12,6 +12,7 @@ import productsController from "../../controllers/products-controller";
 const TAX = 5.99;
 
 export default function Cart() {
+  const navigate = useNavigate();
   const [cart, setCart] = useCart();
   const [productsSuggestions, setProductsSuggestions] = useState<Product[]>([]);
 
@@ -181,7 +182,10 @@ export default function Cart() {
               <strong>
                 Total com taxa: {formatCurrency(totalPrice + TAX)}
               </strong>
-              <button className="ca-text-white ca-bg-black ca-px-4 ca-py-2 ca-w-full">
+              <button
+                className="ca-text-white ca-bg-black ca-px-4 ca-py-2 ca-w-full"
+                onClick={() => navigate("/pagamento")}
+              >
                 Ir para pagamento
               </button>
             </div>
