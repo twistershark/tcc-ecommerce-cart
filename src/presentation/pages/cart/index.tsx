@@ -9,6 +9,8 @@ import { ChevronLeftIcon } from "../../assets/svgs/chevron-left-icon";
 import { ProductSuggestion } from "../../components/product-suggestion";
 import productsController from "../../controllers/products-controller";
 
+import "tailwindcss/tailwind.css";
+
 const TAX = 5.99;
 
 export default function Cart() {
